@@ -1,18 +1,18 @@
 # Ansible & GitLab
 
-1. Ansible Setup
-2. Overview / Architectuur
-3. Inventory
-4. Configuratie SSH
-5. Configuratie GitLab toegang
-6. Commando's uitvoeren
-7. Infrastructure as Code
-8. Ansible Playbooks
-9. Uitrollen MySQL & Database
+1. [Ansible Setup](#ansible-setup)
+2. [Overview / Architectuur](#overview--architectuur)
+3. [Inventory](#inventory)
+4. [Configuratie SSH](#configuratie-ssh)
+5. [Configuratie GitLab](#configuratie-gitlab)
+6. [Commando's uitvoeren](#commandos-uitvoeren)
+7. [Infrastructure as Code](#infrastructure-as-code)
+8. [Ansible Playbooks](#ansible-playbooks)
+9. [Uitrollen MySQL & Database](#uitrollen-mysql--database)
 
 
-## 1. Ansible setup
-De installatie van Ansible op Linux (in dit geval Ubuntu) servers is redelijk straight forward. Het verdient de aanbeveling om voor een specifieke user aan te maken voor "ansible werk". Ansible maakt gebruik van SSH om remote acties uit te voeren. We zullen dus de firewalls voor SSH moeten openstellen. 
+## Ansible Setup
+De installatie van Ansible op Linux (in dit geval Ubuntu) servers is redelijk straight forward. Het verdient de aanbeveling om voor een specifieke user aan te maken voor "ansible werk". Ansible maakt gebruik van SSH om remote acties uit te voeren. We zullen dus de firewalls voor SSH open moeten stellen. 
 
 ```bash
 # As root user
@@ -45,3 +45,64 @@ To                         Action      From
 OpenSSH                    ALLOW       Anywhere
 OpenSSH (v6)               ALLOW       Anywhere (v6)
 ```
+
+## Overview / Architectuur
+
+
+## Inventory
+
+
+## Configuratie SSH
+
+Eerst moet een een SSH key gegenereerd worden om ssh-login naar de remote systemen mogelijk te maken. Deze key hebben we straks ook nodig om verbinding te maken met [GitLab](https://gitlab.com).
+
+```bash
+# as ansible user
+
+# Generate a keypair
+ssh-keygen
+
+# Output: 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/your_home/.ssh/id_rsa):
+
+# press enter to save the key pair into the $HOME/.ssh directory
+# If there is already a keypair, you will be asked to overwrite it. 
+# The previous key *CANNOT BE USED ANYMORE*
+# You should see the following prompt: 
+Enter passphrase (empty for no passphrase):
+# You can enter a passphrase for additional security
+
+# Output will be something like this:
+Your identification has been saved in /your_home/.ssh/id_rsa
+Your public key has been saved in /your_home/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:/hk7MJ5n5aiqdfTVUZr+2Qt+qCiS7BIm5Iv0dxrc3ks user@host
+The keys randomart image is:'
++---[RSA 3072]----+
+|                .|
+|               + |
+|              +  |
+| .           o . |
+|o       S   . o  |
+| + o. .oo. ..  .o|
+|o = oooooEo+ ...o|
+|.. o *o+=.*+o....|
+|    =+=ooB=o.... |
++----[SHA256]-----+
+```
+
+
+## Configuratie GitLab
+
+
+## Commando's Uitvoeren
+
+
+## Infrastructure as Code
+
+
+## Ansible Playbooks
+
+
+## Uitrollen MySQL & Database
