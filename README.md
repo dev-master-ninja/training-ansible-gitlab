@@ -137,4 +137,43 @@ ssh ansible@server-a
 
 ## Configuratie GitLab
 
+Eerst zullen we in GitLab een ssh key moeten aanmaken zodat we zonder meer repostories en playbooks kunnen pushen & pullen. In Gitlab klik je op je **(1) profile-icon** rechtsboven en selecteer vervolgens **Preferences**. In de selectie links, kies **(2) SSH Keys**
+
+Plak in het veld **(3) Key** de inhoud uit `$HOME/.ssh/id-rsa.pub`. En klik vervolgens op **(4) Add Key**
+
+<img src="images/gitlab-ssh-V1-a.png">
+
+<!--
+Op de server moeten we ons nu "bekend" maken middels wat `git` tools: 
+
+```bash
+git config --global user.name "your_username"
+git config --global user.email "your_email_address@example.com"
+
+# Check
+git config --global -list
+```
+-->
+
+We kunnen nu de repo "clonen" op onze server, kopieer uit de **(5) clone** dropdown de regel onder **Clone with SSH (6)** 
+
+<img src="images/gitlab-ssh-V1-b.png">
+
+en voer dit commando uit op de management server: 
+
+```bash
+# as ansible user
+cd $HOME
+mkdir deployment
+cd deployment
+#git clone git@gitlab.com:[user]/[repository].git
+git clone git@gitlab.com:krewinkel/ansible-playbook.git
+
+# where
+# [user] is your GitLab username (in my case krewinkel)
+# [repository] is your GitLab repository (im my case ansible-playbook)
+
+# this will create a directory within `deployment` with 
+# the same name as the repository
+```
 ## Uitrollen MySQL & Database
