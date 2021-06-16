@@ -68,9 +68,9 @@ configuraties:
 
 | Server | Taak | IP | 
 |------|------| ---|
-| server-a | ansible management server | 37.128.150.177 |
-| server-b | webserver | 37.128.150.147 |
-| server-c | webserver & database server | 37.128.150.252 |
+| server-a | Ansible Management server | 37.128.150.177 |
+| server-b | Webserver | 37.128.150.147 |
+| server-c | Webserver & MySQL Server | 37.128.150.252 |
 
 <img src="images/ansible-architecture-V1.png">
 
@@ -135,8 +135,68 @@ ssh root@server-a
 ssh ansible@server-a
 ```
 ## Inventory
+Het "default" inventaris van ansible is te vinden in `/etc/ansible/hosts` en hoewel dit een prima plek is om alles op te nemen, is het - zodra je geen root-access tot de machine hebt - niet mogelijk om hierin wijzigingen aan te brengen. 
+Daarnaast verdient het de aanbeveling om ten alle tijden het ***KEEP IT SIMPLE*** devies te volgen. Naarmate de infrastructuur binnen de organisatie te complex (qua verwevenheid niet zozeer qua omvang) wordt, nemen niet alleen de *single points of failure* toe, maar worden de deployment scenario's ook meteen een stuk complexer. 
+Het grote voordeel van het gebruik van Ansible op infrastructuur niveau is dat er kleine single-tasks virtual machines uitgerold kunnen worden waardoor er een minimale verwevenheid gecreëerd kan worden. 
+
+Omdit issue het hoofd te kunnen bieden is het zaak om de infrastructuur goed in te delen. We kunnen dit doen door de invetaris lijst(en) gesegmenteerd in diverse files op te nemen. Bijvoorbeeld: 
+
+```ini
+# inventory/servers
+# xxx.xxx.xxx.xxx = ip address of server
+
+[webservers]
+server-b ansible_host=xxx.xxx.xxx.xxx
+server-c ansible_host=xxx.xxx.xxx.xxx
+
+[dbservers]
+server-c ansible_host=xxx.xxx.xxx.xxx
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+```
+Als we het inventory commando vervolgens uitvoeren met deze config file als input, krijgen we het volgende te zien: 
+
+```bash
+ansible-inventory --inventory ./servers --list
+```
+```json
+{
+    "_meta": {
+        "hostvars": {
+            "server-b": {
+                "ansible_host": "server-b.dba-training.online",
+                "ansible_python_interpreter": "/usr/bin/python3"
+            },
+            "server-c": {
+                "ansible_host": "server-c.dba-training.online",
+                "ansible_python_interpreter": "/usr/bin/python3"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "dbservers",
+            "ungrouped",
+            "webservers"
+        ]
+    },
+    "dbservers": {
+        "hosts": [
+            "server-c"
+        ]
+    },
+    "webservers": {
+        "hosts": [
+            "server-b",
+            "server-c"
+        ]
+    }
+}
 
 
+```
 
 
 ## Commando's Uitvoeren
