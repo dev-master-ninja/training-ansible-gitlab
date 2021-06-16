@@ -61,8 +61,18 @@ sudo apt install ansible
 ```
 
 ## Overview / Architectuur
+We gaan in deze workshop uit van de volgende 
+configuraties: 
 
+> **Domain** dba-training.online
 
+| Server | Taak | ip | 
+|------|------| ---|
+| server-a | ansible management server | 37.128.150.177 |
+| server-b | webserver | 37.128.150.147 |
+| server-c | webserver & database server | 37.128.150.252 |
+
+<img src="images/ansible-architecture-V1.png">
 
 ## Configuratie SSH
 
@@ -155,7 +165,7 @@ git config --global -list
 ```
 -->
 
-We kunnen nu de repo "clonen" op onze server, kopieer uit de **(5) clone** dropdown de regel onder **Clone with SSH (6)** 
+We kunnen nu de repo "clonen" op onze server. Open de repository in GitLab en kopieer uit de **(5) clone** dropdown de regel onder **Clone with SSH (6)** 
 
 <img src="images/gitlab-ssh-V1-b.png">
 
@@ -166,7 +176,7 @@ en voer dit commando uit op de management server:
 cd $HOME
 mkdir deployment
 cd deployment
-#git clone git@gitlab.com:[user]/[repository].git
+# git clone git@gitlab.com:[user]/[repository].git
 git clone git@gitlab.com:krewinkel/ansible-playbook.git
 
 # where
@@ -176,4 +186,8 @@ git clone git@gitlab.com:krewinkel/ansible-playbook.git
 # this will create a directory within `deployment` with 
 # the same name as the repository
 ```
+
+Nu kunnen we vanuit de `ansible-playbook` directory, met 
+`git pull` de meest recente versie downloaden. Het meest praktische is het natuurlijk om dit in een deployment script op te nemen, zo weet je zeker dat je altijd de meest recente versie van het betreffende playbook(s) hebt.
+
 ## Uitrollen MySQL & Database
