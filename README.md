@@ -14,6 +14,9 @@
 ## Ansible Setup
 De installatie van Ansible op Linux (in dit geval Ubuntu) servers is redelijk straight forward. Het verdient de aanbeveling om voor een specifieke user aan te maken voor "ansible werk". Ansible maakt gebruik van SSH om remote acties uit te voeren. We zullen dus de firewalls voor SSH open moeten stellen. 
 
+Voer onderstaande commando's uit op alle servers in de farm. 
+> NB: Als hardware rollout mogelijk is, bijvoorbeeld in een VMWare omgeving met fysiek toegankelijke servers, dan kan dit ook via Ansible uitgerold worden.
+
 ```bash
 # As root user
 
