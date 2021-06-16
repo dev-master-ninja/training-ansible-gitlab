@@ -64,9 +64,9 @@ sudo apt install ansible
 We gaan in deze workshop uit van de volgende 
 configuraties: 
 
-> **Domain** dba-training.online
+> Domain: **dba-training.online**
 
-| Server | Taak | ip | 
+| Server | Taak | IP | 
 |------|------| ---|
 | server-a | ansible management server | 37.128.150.177 |
 | server-b | webserver | 37.128.150.147 |
