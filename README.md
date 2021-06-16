@@ -1,18 +1,18 @@
 # Ansible & GitLab
 
-1. [Ansible Setup](#ansible-setup)
+1. [Setup](#setup)
 2. [Overview / Architectuur](#overview--architectuur)
-3. [Inventory](#inventory)
-4. [Configuratie SSH](#configuratie-ssh)
-5. [Configuratie GitLab](#configuratie-gitlab)
-6. [Commando's uitvoeren](#commandos-uitvoeren)
+3. [Configuratie SSH](#configuratie-ssh)
+4. [Inventory](#inventory)
+5. [Commando's uitvoeren](#commandos-uitvoeren)
+6. [Ansible Playbooks](#ansible-playbooks)
 7. [Infrastructure as Code](#infrastructure-as-code)
-8. [Ansible Playbooks](#ansible-playbooks)
+8. [Configuratie GitLab](#configuratie-gitlab)
 9. [Uitrollen MySQL & Database](#uitrollen-mysql--database)
 
 
-## Ansible Setup
-De installatie van Ansible op Linux (in dit geval Ubuntu) servers is redelijk straight forward. Het verdient de aanbeveling om voor een specifieke user aan te maken voor "ansible werk". Ansible maakt gebruik van SSH om remote acties uit te voeren. We zullen dus de firewalls voor SSH open moeten stellen. 
+## Setup
+De installatie van Ansible op Linux (in dit geval Ubuntu) servers is redelijk straight forward. Het verdient de aanbeveling om een specifieke user aan te maken voor "*ansible werk*". Ansible maakt gebruik van `SSH` om remote acties uit te voeren. We zullen dus de firewalls voor `SSH` open moeten stellen. 
 
 Voer onderstaande commando's uit op alle servers in de farm. 
 > NB: Als hardware rollout mogelijk is, bijvoorbeeld in een VMWare omgeving met fysiek toegankelijke servers, dan kan dit ook via Ansible uitgerold worden.
@@ -49,10 +49,19 @@ OpenSSH                    ALLOW       Anywhere
 OpenSSH (v6)               ALLOW       Anywhere (v6)
 ```
 
+De installatie van ansible is op Ubuntu een eenvoudig proces: 
+```bash
+# as ansible user
+
+# update repository
+sudo apt update 
+
+# install ansible
+sudo apt install ansible 
+```
+
 ## Overview / Architectuur
 
-
-## Inventory
 
 
 ## Configuratie SSH
@@ -114,19 +123,18 @@ ssh-copy-id ansible@server-a
 # tasks without interuption
 ssh root@server-a
 ssh ansible@server-a
-
 ```
+## Inventory
 
-## Configuratie GitLab
+
 
 
 ## Commando's Uitvoeren
 
+## Ansible Playbooks
 
 ## Infrastructure as Code
 
-
-## Ansible Playbooks
-
+## Configuratie GitLab
 
 ## Uitrollen MySQL & Database
