@@ -143,11 +143,10 @@ Omdit issue het hoofd te kunnen bieden is het zaak om de infrastructuur goed in 
 
 ```ini
 # inventory/servers
-# xxx.xxx.xxx.xxx = ip address of server
 
 [webservers]
-server-b ansible_host=xxx.xxx.xxx.xxx
-server-c ansible_host=xxx.xxx.xxx.xxx
+server-b ansible_host=server-b.dba-training.online
+server-c ansible_host=server-c.dba-training.online
 
 [dbservers]
 server-c ansible_host=xxx.xxx.xxx.xxx
@@ -194,12 +193,25 @@ ansible-inventory --inventory ./servers --list
         ]
     }
 }
-
-
 ```
 
 
 ## Commando's Uitvoeren
+We kunnen nu op onze inventory commando's uitvoeren. Stel we willen op onze webservers (in dit voorbeeld zowel server-b als server-c) daadwerkelijk een apache2 webserver installeren. 
+We kunnen dat nu eenvoudig doen door op onze management server het volgende commando in te geven: 
+
+```bash
+ansible webservers -i servers -a "apt -y install apache2" -u root
+```
+Wat gebeurt hier nu: 
+1. we filteren uit de inventory file `servers` de servers die onder `[webservers]` opgenomen zijn (in dit geval allebei).
+2. met de `-a` flag zeggen we dat een commando uitgevoerd moet worden en tussen de quote's geven we aan welk commando dat is. In dit geval dus `apt -y install apache2` (het commando om op Ubuntu de apache2 webserver te installeren en "Yes" op alle vragen te antwoorden: de `-y` flag).
+3. Dit moeten we op de remote machines als de `root` user doen, dus de `-u` flag geeft aan onder welke gebruiker we dit doen. 
+
+Op dezelfde manier kunnen we nu bijvoorbeeld MySQL installeren op de `[dbservers]`: 
+```bash
+ansible dbservers -i servers -a "apt -y install mysql-server" -u root
+```
 
 ## Ansible Playbooks
 
