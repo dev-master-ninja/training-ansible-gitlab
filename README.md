@@ -94,7 +94,28 @@ The keys randomart image is:'
 |    =+=ooB=o.... |
 +----[SHA256]-----+
 ```
+Vervolgens moet de `$HOME/.ssh/id-rsa.pub` file naar de ontvangende user/host gekopieerd worden: 
 
+```bash
+# as ansible user
+ssh-copy-id [username]@[host]
+
+# example
+# You will be prompted to enter the host fingerprint in to 
+# your $HOME/.ssh/known-hosts file
+
+# You also will be prompted for the password of the remote user. 
+
+ssh-copy-id root@server-a
+ssh-copy-id ansible@server-a
+
+# Once this is achieved you can ssh into the remote system 
+# without a password, hence, ansible can perform it's 
+# tasks without interuption
+ssh root@server-a
+ssh ansible@server-a
+
+```
 
 ## Configuratie GitLab
 
