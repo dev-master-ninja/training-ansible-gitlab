@@ -1,0 +1,7 @@
+- hosts: dbservers
+  become: true
+  tasks:
+        - name: Create a new database with name 'online_data'
+          community.mysql.mysql_db:
+                name: online_data
+                state: present

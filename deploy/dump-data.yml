@@ -1,0 +1,8 @@
+- hosts: dbservers
+  become: true
+  tasks: 
+        - name: Dump Database Online Data
+          community.mysql.mysql_db:
+                name: online_data
+                state: dump
+                target: /tmp/dump.sql

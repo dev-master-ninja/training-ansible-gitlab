@@ -1,0 +1,4 @@
+- import_playbook: copy-data.yml
+- import_playbook: create-db.yml
+- import_playbook: load-data.yml
+- import_playbook: dump-data.yml

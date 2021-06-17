@@ -1,0 +1,8 @@
+- hosts: dbservers
+  become: true
+  tasks: 
+        - name: Load Data file
+          community.mysql.mysql_db:
+                name: online_data
+                state: import
+                target: /tmp/data.sql

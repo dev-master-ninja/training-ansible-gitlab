@@ -1,0 +1,10 @@
+[webservers]
+server-b ansible_host=server-b.dba-training.online
+server-c ansible_host=server-c.dba-training.online
+
+[dbservers]
+server-c ansible_host=server-c.dba-training.online
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_sudo_pass=dzYX74V2

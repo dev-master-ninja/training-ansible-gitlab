@@ -251,6 +251,61 @@ ansible-playbook -i inventory playbook.yml
 ```
 waarbij de `-i` flag optioneel is (maar het verdient de aanbeveling om de inventory steeds mee te nemen in een playbook pakketje).
 
+### BuiltIns
+Er zijn een heleboel "builtins" beschikbaar om de playbooks diverse veel voorkomende taken te laten doen. Het voert wat ver om ze hier allemaal op te noemen, maar op de Ansible Documentatie site is alles terug te vinden. Inclusief voorbeelden. https://docs.ansible.com
+
+### Bestanden kopieren
+Een zeer praktische builtin, die je naar alle waarschijnlijkheid regelmatig zult gebruiken is `ansible.builtin.copy` hiermee kun je files van de management node naar de clients kopieren.
+```yaml
+- hosts: dbservers
+  tasks:
+        - name: Copy Initial Datafile
+          ansible.builtin.copy:
+                src: ./data.sql
+                dest: /tmp/data.sql
+                owner: ansible
+                group: ansible
+                mode: '0644'
+```
+### Community Packages
+Ook binnen de community zijn diverse tools en packages te verkrijgen. Zo is er bijvoorbeeld een hele command set verkrijgbaar voor [MySQL](https://docs.ansible.com/ansible/latest/collections/community/mysql/mysql_db_module.html). 
+Je kunt het installeren middels:
+```bash
+ansible-galaxy collection install community.mysql
+```
+Voorbeeld aanmaken database: 
+```yaml
+- hosts: dbservers
+  become: true
+  tasks:
+        - name: Create a new database with name 'online_data'
+          community.mysql.mysql_db:
+                name: online_data
+                state: present
+
+```
+Voorbeeld importeren van data: 
+```yaml
+- hosts: dbservers
+  become: true
+  tasks:
+        - name: Create a new database with name 'online_data'
+          community.mysql.mysql_db:
+                name: online_data
+                state: present
+```
+Voorbeeld exporteren van data (backup):
+```yaml
+- hosts: dbservers
+  become: true
+  tasks:
+        - name: Dump Database Online Data
+          community.mysql.mysql_db:
+                name: online_data
+                state: dump
+                target: /tmp/dump.sql
+```
+
 ## Infrastructure as Code
 
 Door het gebruik van playbooks wordt het installeren en configureren van software, componenten, packages, containers etc. een handeling die vergaand geautomatiseerd kan worden. Hierdoor lijkt het steeds meer op het uitrollen van specifieke versies van software. 
