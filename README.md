@@ -215,6 +215,42 @@ ansible dbservers -i servers -a "apt -y install mysql-server" -u root
 
 ## Ansible Playbooks
 
+Een playbook is eigenlijk niet meer dan een set commando's die achter elkaar uitgevoerd moeten worden. Er zijn tal van mogelijkheden om complexe scenario's te verzinnen, maar op zich is ook hier een [***KISS***](https://nl.wikipedia.org/wiki/KISS-principe) approach in mijn optiek het beste. 
+
+> "Simplicity is a prerequisite for reliability" - Edsger W. Dijkstra, 18 juni 1975
+
+Beperk de playbooks tot de strikte handelingen die noodzakelijk zijn voor dat ene pakket en maak meerdere playbooks om complexere taken uit te voeren. 
+
+Een playbook bestaat uit een of meerdere ***plays*** die op hun beurt weer uit een of meerdere taken kunnen bestaan. De syntax is een afgeleide van het zogenaamde `yaml` formaat, waarin een hierarchische onderverdeling van de content de groepering aangeeft. 
+
+Onderstaand playbook illustreert dit: 
+
+```yaml
+# playbook.yml
+
+- hosts: webservers
+  become: true
+
+  tasks:
+    - name: Install Apache 2
+      action: apt pkg=apache2 state=latest
+
+    - name: Start the Apache2 Webserver
+      action: service name=apache2 state=started
+
+```
+Vrij vertaald staat hier: 
+Log in als `root` (`become` = `sudo`) op alle machines uit de inventory die gegroepeerd zijn als "webserver" en 
+1. installeer het package "apache2" (webserver)
+2. Start de webserver service 
+
+Dit playbook kan vervolgens gestart worden door het commando: 
+
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+waarbij de `-i` flag optioneel is (maar het verdient de aanbeveling om de inventory steeds mee te nemen in een playbook pakketje).
+
 ## Infrastructure as Code
 
 Door het gebruik van playbooks wordt het installeren en configureren van software, componenten, packages, containers etc. een handeling die vergaand geautomatiseerd kan worden. Hierdoor lijkt het steeds meer op het uitrollen van specifieke versies van software. 
@@ -249,28 +285,39 @@ In het vervolgscherm zie je vervolgens de stappen die je moet uitvoeren om e.e.a
 
 #### stap 2 - Visual Studio Configureren
 ------
+Open Visual Studio en open een nieuwe terminal.
 
-Open Visual Studio en klik in de taakbalk links op het "Source Control" icon. En klik vervolgens op "Clone Repository".
+`cd` vervolgens naar de directory waarin je project moet komen te staan. 
+
+<img src="images/vs-gitlab-1.png">
+
+"Clone" vervolgens het project met de URL die onder de "Clone" knop op GitLab staat. 
+
+```bash
+git clone https://gitlab.com/krewinkel/uitrol-mysql-database.git
+```
+Git maakt nu onder de huidige directory een directory aan met de naam (in dit geval) `uitrol-mysql-database` (de eerdere slug).
+
+Open vervolgens deze folder in VS Code en voeg een file `README.md` toe aan het project.
+
+<img src="images/vs-gitlab-2.png">
+
+Als er een wijziging is, zal het Source Control Icoontje oplichten en kan er ge-`commit` (lokale update) en ge-`push`-ed (remote update worden).
+
+<img src="images/vs-gitlab-3.png">
+
+Nu kunnen we in ons project playbooks en inventories aanmaken en die naar GitLab pushen zodra het nodig is. 
+
+<img src="images/vs-gitlab-4.png">
 
 ## Configuratie GitLab
 
-Eerst zullen we in GitLab een ssh key moeten aanmaken zodat we zonder meer repostories en playbooks kunnen pushen & pullen. In Gitlab klik je op je **(1) profile-icon** rechtsboven en selecteer vervolgens **Preferences**. In de selectie links, kies **(2) SSH Keys**
+Als we op de server willen `clone`n en `pull`en zullen we eerstin GitLab een ssh key moeten aanmaken zodat we zonder meer repostories en playbooks kunnen pushen & pullen. In Gitlab klik je op je **(1) profile-icon** rechtsboven en selecteer vervolgens **Preferences**. In de selectie links, kies **(2) SSH Keys**
 
 Plak in het veld **(3) Key** de inhoud uit `$HOME/.ssh/id-rsa.pub`. En klik vervolgens op **(4) Add Key**
 
 <img src="images/gitlab-ssh-V1-a.png">
 
-<!--
-Op de server moeten we ons nu "bekend" maken middels wat `git` tools: 
-
-```bash
-git config --global user.name "your_username"
-git config --global user.email "your_email_address@example.com"
-
-# Check
-git config --global -list
-```
--->
 
 We kunnen nu de repo "clonen" op onze server. Open de repository in GitLab en kopieer uit de **(5) clone** dropdown de regel onder **Clone with SSH (6)** 
 
@@ -297,3 +344,4 @@ git clone git@gitlab.com:krewinkel/ansible-playbook.git
 Nu kunnen we vanuit de `ansible-playbook` directory, met `git pull` de meest recente versie downloaden. Het meest praktische is het natuurlijk om dit in een deployment script op te nemen, zo weet je zeker dat je altijd de meest recente versie van het betreffende playbook(s) hebt.
 
 ## Uitrollen MySQL & Database
+Playbook en [README](./deploy/README.md) in de deploy folder.
