@@ -217,6 +217,16 @@ ansible dbservers -i servers -a "apt -y install mysql-server" -u root
 
 ## Infrastructure as Code
 
+Door het gebruik van playbooks wordt het installeren en configureren van software, componenten, packages, containers etc. een handeling die vergaand geautomatiseerd kan worden. Hierdoor lijkt het steeds meer op het uitrollen van specifieke versies van software. 
+Door het gebruik van GitLab (of github, bitbucket of eender welke variant), toch primair een tool voor versiebeheer t.a.v. software, maakt de deployment workflow analoog aan de workflow voor het uitrollen van nieuwe versies van software. Vandaar ook de term: "***Infrastructure as Code***". 
+
+Het verdient ook aanbeveling om een code editor te gebruiken om de playbooks te maken en naar GitLab te pushen. Een editor als [Visual Studio Code](https://code.visualstudio.com) bijvoorbeeld, heeft het hele "*git*" fenomeen standaard ingebouwd, en ook de [YAML structuur](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) van de playbooks kan als plugin opgenomen worden. 
+
+### Hoe werkt git (in a nutshell)
+Git is een "twee-traps raket", iedereen wijzigt zijn/haar code via een editor. En middels een zogenaamde `commit` worden de wijzigingen in de **LOKALE** repository (een bibliotheek op je laptop of netwerkschijf) weggeschreven. Zodra je een `push` commando geeft, worden de wijzigingen naar de **CENTRALE** repository (op GitLab) weggeschreven. Daar wordt gekeken of er conflicten zijn met informatie van anderen, en zo niet dan is dat de laatste status en versie van de code. 
+
+Middels een `pull` commando download je de laatste versie van de centrale repository op en heb je alle wijzigingen van het hele team in je eigen omgeving. De functionaliteiten van `git` zijn natuurlijk veel uitgebreider en complexer, maar dit principe is genoeg als "***working knowledge***"
+
 ## Configuratie GitLab
 
 Eerst zullen we in GitLab een ssh key moeten aanmaken zodat we zonder meer repostories en playbooks kunnen pushen & pullen. In Gitlab klik je op je **(1) profile-icon** rechtsboven en selecteer vervolgens **Preferences**. In de selectie links, kies **(2) SSH Keys**
@@ -259,7 +269,6 @@ git clone git@gitlab.com:krewinkel/ansible-playbook.git
 # the same name as the repository
 ```
 
-Nu kunnen we vanuit de `ansible-playbook` directory, met 
-`git pull` de meest recente versie downloaden. Het meest praktische is het natuurlijk om dit in een deployment script op te nemen, zo weet je zeker dat je altijd de meest recente versie van het betreffende playbook(s) hebt.
+Nu kunnen we vanuit de `ansible-playbook` directory, met `git pull` de meest recente versie downloaden. Het meest praktische is het natuurlijk om dit in een deployment script op te nemen, zo weet je zeker dat je altijd de meest recente versie van het betreffende playbook(s) hebt.
 
 ## Uitrollen MySQL & Database
