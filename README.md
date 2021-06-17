@@ -225,7 +225,33 @@ Het verdient ook aanbeveling om een code editor te gebruiken om de playbooks te 
 ### Hoe werkt git (in a nutshell)
 Git is een "twee-traps raket", iedereen wijzigt zijn/haar code via een editor. En middels een zogenaamde `commit` worden de wijzigingen in de **LOKALE** repository (een bibliotheek op je laptop of netwerkschijf) weggeschreven. Zodra je een `push` commando geeft, worden de wijzigingen naar de **CENTRALE** repository (op GitLab) weggeschreven. Daar wordt gekeken of er conflicten zijn met informatie van anderen, en zo niet dan is dat de laatste status en versie van de code. 
 
-Middels een `pull` commando download je de laatste versie van de centrale repository op en heb je alle wijzigingen van het hele team in je eigen omgeving. De functionaliteiten van `git` zijn natuurlijk veel uitgebreider en complexer, maar dit principe is genoeg als "***working knowledge***"
+Middels een `pull` commando download je de laatste versie van de centrale repository op en heb je alle wijzigingen van het hele team in je eigen omgeving. De functionaliteiten van `git` zijn natuurlijk veel uitgebreider en complexer, maar dit principe is genoeg als "***working knowledge***".
+
+### Een repository opzetten
+We gaan stap voor stap een repository opzetten en hier een playbook aan toevoegen. We gebruiken [Visual Studio Code](https://code.visualstudio.com)  als client tool om dit voor elkaar te krijgen. 
+
+#### stap 1 - Een Repository Aanmaken
+------
+Login op GitLab en klik rechtsboven op `New project` en selecteer vervolgens `Create Blank Project`.
+
+<img src="images/gitlab-step1.png">
+<img src="images/gitlab-step2.png">
+
+Geef het project een naam, bijvoorbeeld "Uitrol MySQL Database". De "project slug" wordt automatisch gevuld (dit is de URL waar we straks mee aan de slag moeten). Laat de rest van opties gewoon zoals ze zijn. 
+
+<img src="images/gitlab-step3.png">
+
+Klik vervolgens op `Create Project`.
+
+In het vervolgscherm zie je vervolgens de stappen die je moet uitvoeren om e.e.a. te koppelen: 
+
+<img src="images/gitlab-step4.png">
+
+#### stap 2 - Visual Studio Configureren
+------
+
+Open Visual Studio en klik op het menu item "Terminal".
+`cd` vervolgens naar je project directory. 
 
 ## Configuratie GitLab
 
