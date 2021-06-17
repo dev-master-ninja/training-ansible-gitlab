@@ -131,8 +131,8 @@ ssh-copy-id ansible@server-a
 # Once this is achieved you can ssh into the remote system 
 # without a password, hence, ansible can perform it's 
 # tasks without interuption
-ssh root@server-a
-ssh ansible@server-a
+ssh root@server-b.dba-training.online
+ssh ansible@server-b.dba-training.online
 ```
 ## Inventory
 Het "default" inventaris van ansible is te vinden in `/etc/ansible/hosts` en hoewel dit een prima plek is om alles op te nemen, is het - zodra je geen root-access tot de machine hebt - niet mogelijk om hierin wijzigingen aan te brengen. 
@@ -149,7 +149,7 @@ server-b ansible_host=server-b.dba-training.online
 server-c ansible_host=server-c.dba-training.online
 
 [dbservers]
-server-c ansible_host=xxx.xxx.xxx.xxx
+server-c ansible_host=server-c.dba-training.online
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
@@ -250,8 +250,7 @@ In het vervolgscherm zie je vervolgens de stappen die je moet uitvoeren om e.e.a
 #### stap 2 - Visual Studio Configureren
 ------
 
-Open Visual Studio en klik op het menu item "Terminal".
-`cd` vervolgens naar je project directory. 
+Open Visual Studio en klik in de taakbalk links op het "Source Control" icon. En klik vervolgens op "Clone Repository".
 
 ## Configuratie GitLab
 
