@@ -73,6 +73,10 @@ configuraties:
 | server-b | Webserver | 37.128.150.147 |
 | server-c | Webserver & MySQL Server | 37.128.150.252 |
 
+| server-d | *Geen taak* | 185.57.8.20 |
+| server-e | *Geen taak* | 185.57.8.188 |
+| server-f | *Geen taak* | 37.128.150.31 |
+
 <img src="images/ansible-architecture-V1.png">
 
 ## Configuratie SSH
