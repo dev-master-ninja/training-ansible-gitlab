@@ -9,6 +9,7 @@
 7. [Infrastructure as Code](#infrastructure-as-code)
 8. [Configuratie GitLab](#configuratie-gitlab)
 9. [Uitrollen MySQL & Database](#uitrollen-mysql--database)
+10. [CommVault](#commvault)
 
 
 ## Setup
@@ -267,6 +268,31 @@ Een zeer praktische builtin, die je naar alle waarschijnlijkheid regelmatig zult
                 group: ansible
                 mode: '0644'
 ```
+
+Een shell commando (script o.i.d.) uitvoeren kan met de "builtin" `shell`
+Bijvoorbeeld: 
+```yaml
+- hosts: webservers
+
+  tasks:
+    - name: Execute script
+      shell: /home/ansible/deploy.sh > /dev/null
+```
+
+Ook voor errors geldt dat er uitgebreide mogelijkheden bestaan, deze zijn terug te vinden op [Ansible Errorhandling](https://docs.ansible.com/ansible/latest/user_guide/playbooks_error_handling.html)
+Een basis voorbeeld, het zelfde script maar nu met een ignore van de error:
+```yaml
+- hosts: webservers
+
+  tasks:
+    - name: Execute script
+      shell: /home/ansible/deploy.sh > /dev/null
+      ignore_errors: yes
+```
+Bekijk het verschil in de uitvoer. 
+
+
+
 ### Community Packages
 Ook binnen de community zijn diverse tools en packages te verkrijgen. Zo is er bijvoorbeeld een hele command set verkrijgbaar voor [MySQL](https://docs.ansible.com/ansible/latest/collections/community/mysql/mysql_db_module.html). 
 Je kunt het installeren middels:
@@ -400,3 +426,7 @@ Nu kunnen we vanuit de `ansible-playbook` directory, met `git pull` de meest rec
 
 ## Uitrollen MySQL & Database
 Playbook en [README](./deploy/README.md) in de deploy folder.
+
+
+# CommVault
+Er is een specifiek module beschikbaar voor CommVault. Deze Library is te vinden op [GitHub](https://github.com/Commvault/ansible).
